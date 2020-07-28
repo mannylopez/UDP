@@ -4,7 +4,6 @@
   <title>UDP Carto CSS Builder</title>
   <link rel="stylesheet" href="tufte.css"/>
   <style>
-
     input {
       border: none;
       border-bottom: 2px solid black;
@@ -12,11 +11,9 @@
       font-size:1.5rem;
       text-align: center;
     }
-
     input:focus {
       outline-width: 0;
     }
-
     input[type="color"] {
       border: none;
       width: 65px;
@@ -59,28 +56,22 @@
       text-align:left;
       vertical-align:top
     }
+    textarea {
+      background-color: red;
+    }
   </style>
 </head>
 <body class="sans">
   <article>
-    <h1>UDP Carto CSS Builder</h1>
-    
+    <h1>UDP Carto CSS Builder</h1>  
     <section> 
       <p>
         <label for="column-name">Column name:</label>
         <input type="text" id="column-name" name="column-name"  autofocus>
-        
-        <!-- <label for="mn-demo" class="margin-toggle">&#8853;</label>
-        <input type="checkbox" id="mn-demo" class="margin-toggle"/>
-        <span class="marginnote">
-          Section 1
-        </span> -->
       </p>
     </section>
-
     <section>
       <p>
-
         <table class="tg">
         <thead>
           <tr>
@@ -94,105 +85,68 @@
           <tr>
             <td class="tg-0lax"></td>
             <td class="tg-0lax color"><input type="color" name="color1" id="color-1"></td>
-            <td class="tg-0lax" id="hexcode-1">hex1</td>
+            <td class="tg-0lax" id="hexcode-1"></td>
             <td class="tg-0lax"></td>
           </tr>
           <tr>
             <td class="tg-0lax"></td>
-            <td class="tg-0lax"><input type="color" name="color2"></td>
-            <td class="tg-0lax" id="hexcode-2">hex2</td>
+            <td class="tg-0lax"><input type="color" name="color2" id="color-2"></td>
+            <td class="tg-0lax" id="hexcode-2"></td>
             <td class="tg-0lax"></td>
           </tr>
           <tr>
             <td class="tg-0lax"></td>
-            <td class="tg-0lax"><input type="color" name="color3"></td>
+            <td class="tg-0lax"><input type="color" name="color3" id="color-3"></td>
             <td class="tg-0lax" id="hexcode-3"></td>
             <td class="tg-0lax"></td>
           </tr>
           <tr>
             <td class="tg-0lax"></td>
-            <td class="tg-0lax"><input type="color" name="color4"></td>
+            <td class="tg-0lax"><input type="color" name="color4" id="color-4"></td>
             <td class="tg-0lax" id="hexcode-4"></td>
             <td class="tg-0lax"></td>
           </tr>
           <tr>
             <td class="tg-0lax"></td>
-            <td class="tg-0lax"><input type="color" name="color5"></td>
+            <td class="tg-0lax"><input type="color" name="color5" id="color-5"></td>
             <td class="tg-0lax" id="hexcode-5"></td>
             <td class="tg-0lax"></td>
           </tr>
         </tbody>
       </table>
       </p>
-      
     </section>
   </article>
-
-
-
   <script>
-
-
     document.addEventListener("click", function() {
-      console.log("HELLO")
-    })
+      let e = '';
+      e = e || window.event;
+      let targetID = e.target.id || e.srcElement,
+           text = targetID.textContent || targetID.innerText;
 
+      let targetType = e.target.type || e.srcElement,
+           textType = targetType.textContent || targetType.innerText;
 
+      if (targetType === "color") {
+        document.getElementById(targetID).addEventListener("input", function() {
+          let hexValue = document.getElementById(targetID).value;
+          let number = targetID.slice(-1);
+          let hexcodeID = "hexcode-" + number;
+          let colorValue = document.getElementById(hexcodeID).innerHTML = hexValue;
+        })
+      } else {
+        document.getElementById("table").addEventListener("input", function() {
+          let hexValue = document.getElementById(targetID).innerHTML;
+          let number = targetID.slice(-1);
+          let colorID = "color-" + number;
+          let colorValue = document.getElementById(colorID).value = hexValue;  
+        })
+      }
+    }, false)
 
-    let heading = document.getElementsByTagName("h1")[0].innerHTML
-    
-    document.addEventListener("keypress", function(){
-      console.log(value)
-    })
-
-    document.getElementById("table").addEventListener("input", function() {
-      // if Color colum value is updated, then put that value into Hex Code column
-      let area = document.getElementById("hexcode-1").innerHTML
-      console.log("The text in here is " + area)
-
-      let hexValue = document.getElementById("hexcode-1").innerHTML
-      console.log(hexValue)
-      
-      let colorValue = document.getElementById("color-1").value = hexValue
-      console.log("ColorValue is now " + colorValue)
-
-    })
-
-
-    // window.addEventListener("DOMContentLoaded", function(e) {
-    //   let arr = document.getElementsByTagName("input");
-    //   console.log(arr)
-
-    //   // for (let idx in arr)
-    // })
-
-  //   window.addEventListener("DOMContentLoaded", function(e) {
-  //   let arr = document.getElementsByTagName("input");
-
-  //   for(var idx in arr) {
-  //     if(arr[idx].type == "color") {
-  //       var el = arr[idx];
-  //       console.log(el)
-  //       var newEl = document.createElement("input");
-  //       console.log(newEl)
-  //       newEl.size = 8;
-  //       newEl.value = el.value;
-  //       newEl.pattern = "#[0-9A-Fa-f]{6}";
-  //       newEl.style.marginLeft = "0.5em";
-  //       el.insertAdjacentElement("afterend", newEl);
-        
-  //       newEl.addEventListener("change", function(e) {
-  //         el.value = e.target.value;
-  //       }.bind(el), false);
-
-  //       el.addEventListener("change", function(e) {
-  //         newEl.value = e.target.value;
-  //       }.bind(newEl), false);
-  //     }
-  //   }
-  // }, false);
-
-
+    function write(){
+      alert("test")
+    }
   </script>
 </body>
 </html>
