@@ -125,9 +125,9 @@ function printHTML() {
 
 `
     
-  let existingHTMLOutput = document.getElementById("htmlCodeBlock").value
+    let existingHTMLOutput = document.getElementById("htmlCodeBlock").value
 
-  document.getElementById("htmlCodeBlock").value = existingHTMLOutput + htmlCodeBlock
+    document.getElementById("htmlCodeBlock").value = existingHTMLOutput + htmlCodeBlock
   }
 
   // then close with /ul
