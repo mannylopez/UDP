@@ -2,64 +2,9 @@
 <html>
 <head>
   <title>UDP Carto CSS Builder</title>
-  <link rel="stylesheet" href="tufte.css"/>
-  <style>
-    input {
-      border: none;
-      border-bottom: 2px solid black;
-      background-color: #fffff8;
-      font-size:1.5rem;
-      text-align: center;
-    }
-    input:focus {
-      outline-width: 0;
-    }
-    input[type="color"] {
-      border: none;
-      width: 65px;
-      height: 25px;
-    }
-    tbody:focus {
-     outline-width: 0; 
-    }
-    .tg {
-      border-collapse:collapse;
-      border-spacing:0;
-    }
-    .tg td {
-      border-color:#E3E3E3;
-      border-style:solid;
-      border-width:1px;
-      /*font-family:Arial, sans-serif;*/
-      font-size:1.4rem;
-      overflow:hidden;
-      padding:10px 5px;
-      word-break:normal;
-    }
-    .tg th {
-      border-color:black;
-      border-style:solid;
-      border-width:1px;
-      /*font-family:Arial, sans-serif;*/
-      font-size:1.5rem;
-      font-weight:normal;
-      overflow:hidden;
-      padding:10px 5px;
-      word-break:normal;
-    }
-    .tg .tg-0pky {
-      border-color:inherit;
-      text-align:left;
-      vertical-align:top
-    }
-    .tg .tg-0lax {
-      text-align:left;
-      vertical-align:top
-    }
-    textarea {
-      background-color: red;
-    }
-  </style>
+  <link rel="stylesheet" href="css/tufte.css"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <script type="text/javascript" src="js/scripts.js"></script>
 </head>
 <body class="sans">
   <article>
@@ -83,70 +28,82 @@
         </thead>
         <tbody contenteditable="true" id="table">
           <tr>
-            <td class="tg-0lax"></td>
-            <td class="tg-0lax color"><input type="color" name="color1" id="color-1"></td>
+            <td class="tg-0lax" id="breakpoint-1"></td>
+            <td class="tg-0lax"><input type="color" name="color1" id="color-1"></td>
             <td class="tg-0lax" id="hexcode-1"></td>
-            <td class="tg-0lax"></td>
+            <td class="tg-0lax" id="label-1"></td>
           </tr>
           <tr>
-            <td class="tg-0lax"></td>
+            <td class="tg-0lax" id="breakpoint-2"></td>
             <td class="tg-0lax"><input type="color" name="color2" id="color-2"></td>
             <td class="tg-0lax" id="hexcode-2"></td>
-            <td class="tg-0lax"></td>
+            <td class="tg-0lax" id="label-2"></td>
           </tr>
           <tr>
-            <td class="tg-0lax"></td>
+            <td class="tg-0lax" id="breakpoint-3"></td>
             <td class="tg-0lax"><input type="color" name="color3" id="color-3"></td>
             <td class="tg-0lax" id="hexcode-3"></td>
-            <td class="tg-0lax"></td>
+            <td class="tg-0lax" id="label-3"></td>
           </tr>
           <tr>
-            <td class="tg-0lax"></td>
+            <td class="tg-0lax" id="breakpoint-4"></td>
             <td class="tg-0lax"><input type="color" name="color4" id="color-4"></td>
             <td class="tg-0lax" id="hexcode-4"></td>
-            <td class="tg-0lax"></td>
+            <td class="tg-0lax" id="label-4"></td>
           </tr>
           <tr>
-            <td class="tg-0lax"></td>
+            <td class="tg-0lax" id="breakpoint-5"></td>
             <td class="tg-0lax"><input type="color" name="color5" id="color-5"></td>
             <td class="tg-0lax" id="hexcode-5"></td>
-            <td class="tg-0lax"></td>
+            <td class="tg-0lax" id="label-5"></td>
           </tr>
         </tbody>
       </table>
       </p>
     </section>
+    <section>
+      <p>
+        <label for="mn-demo" class="margin-toggle">&#8853;</label>
+        <input type="checkbox" id="mn-demo" class="margin-toggle"/>
+        <span class="marginnote">Input Color Brewer hex codes
+          <br>
+          <br>
+          <button type="button" onclick="updateColor()">Update</button>
+          <button type="button" onclick="updateColorReverse()">Reverse</button>
+        </span>
+
+        <textarea rows="6" id="colorBrewer"></textarea>
+      </p>
+    </section>
+
+    <section>
+      <p>
+        <label for="mn-demo" class="margin-toggle">&#8853;</label>
+        <input type="checkbox" id="mn-demo" class="margin-toggle"/>
+        <span class="marginnote">Output CSS code box for Style
+          <br>
+          <br>
+          <button type="button" onclick="printCSS()">Create CSS</button>
+        </span>
+
+        <textarea rows="20" id="cssCodeBlock"></textarea>
+      </p>
+    </section>
+
+    <section>
+      <p>
+        <label for="mn-demo" class="margin-toggle">&#8853;</label>
+        <input type="checkbox" id="mn-demo" class="margin-toggle"/>
+        <span class="marginnote">Output HTML code box for Legend
+          <br>
+          <br>
+          <button type="button" onclick="printHTML()">Create HTML</button>
+        </span>
+
+        <textarea rows="20" id="htmlCodeBlock"></textarea>
+      </p>
+    </section>
   </article>
-  <script>
-    document.addEventListener("click", function() {
-      let e = '';
-      e = e || window.event;
-      let targetID = e.target.id || e.srcElement,
-           text = targetID.textContent || targetID.innerText;
-
-      let targetType = e.target.type || e.srcElement,
-           textType = targetType.textContent || targetType.innerText;
-
-      if (targetType === "color") {
-        document.getElementById(targetID).addEventListener("input", function() {
-          let hexValue = document.getElementById(targetID).value;
-          let number = targetID.slice(-1);
-          let hexcodeID = "hexcode-" + number;
-          let colorValue = document.getElementById(hexcodeID).innerHTML = hexValue;
-        })
-      } else {
-        document.getElementById("table").addEventListener("input", function() {
-          let hexValue = document.getElementById(targetID).innerHTML;
-          let number = targetID.slice(-1);
-          let colorID = "color-" + number;
-          let colorValue = document.getElementById(colorID).value = hexValue;  
-        })
-      }
-    }, false)
-
-    function write(){
-      alert("test")
-    }
-  </script>
+  
 </body>
 </html>
